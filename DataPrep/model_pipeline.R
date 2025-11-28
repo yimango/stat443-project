@@ -229,6 +229,7 @@ engineer_features <- function(data) {
   # Build predictors (all using info only up to time t)
   df <- df %>%
     mutate(
+      # === Basic Changes ===
       # dVIX: change in VIX
       dVIX = vix_close - lag(vix_close, 1),
       
@@ -246,10 +247,23 @@ engineer_features <- function(data) {
         NA_real_
       },
       
+      # === Volatility Features ===
+      # Realized volatility (rolling std of returns)
+      realized_vol_5 = rollapply(R, width = 5, FUN = sd, fill = NA, align = "right", na.rm = TRUE),
+      realized_vol_20 = rollapply(R, width = 20, FUN = sd, fill = NA, align = "right", na.rm = TRUE),
+      
+      # VIX levels (not just changes) - standardized
+      vix_level = vix_close,
+      vix_ma = rollmean(vix_close, k = 20, align = "right", fill = NA),
+      vix_dev = vix_close - vix_ma,  # Deviation from mean
+      
+      # === Volume Features ===
       # Volume surprise: log volume - rolling mean
       log_vol = log(pmax(spy_volume, 1e-6)),  # Avoid log(0)
       vol_surp = log_vol - rollmean(log_vol, k = 20, align = "right", fill = NA),
+      vol_ma_ratio = spy_volume / rollmean(spy_volume, k = 20, align = "right", fill = NA),
       
+      # === Price/Technical Features ===
       # Range: (high - low) / close
       range = if (has_ohlc) {
         (spy_high - spy_low) / spy_close
@@ -257,16 +271,81 @@ engineer_features <- function(data) {
         NA_real_
       },
       
-      # Momentum: lagged returns
+      # Moving averages
+      ma_5 = rollmean(spy_close, k = 5, align = "right", fill = NA),
+      ma_20 = rollmean(spy_close, k = 20, align = "right", fill = NA),
+      ma_50 = rollmean(spy_close, k = 50, align = "right", fill = NA),
+      
+      # Price relative to moving averages
+      price_ma5_ratio = spy_close / ma_5 - 1,
+      price_ma20_ratio = spy_close / ma_20 - 1,
+      ma_cross = ma_5 / ma_20 - 1,  # MA crossover signal
+      
+      # RSI-like momentum (simplified)
+      gains = ifelse(R > 0, R, 0),
+      losses = ifelse(R < 0, -R, 0),
+      avg_gain_14 = rollmean(gains, k = 14, align = "right", fill = NA),
+      avg_loss_14 = rollmean(losses, k = 14, align = "right", fill = NA),
+      rs = avg_gain_14 / pmax(avg_loss_14, 1e-6),
+      rsi = 100 - (100 / (1 + rs)),
+      
+      # === Momentum Features ===
+      # Lagged returns
       R_lag1 = lag(R, 1),
-      R_lag2 = lag(R, 2)
+      R_lag2 = lag(R, 2),
+      R_lag3 = lag(R, 3),
+      R_lag5 = lag(R, 5),
+      
+      # Cumulative returns over different windows
+      cumret_5 = rollapply(R, width = 5, FUN = sum, fill = NA, align = "right", na.rm = TRUE),
+      cumret_20 = rollapply(R, width = 20, FUN = sum, fill = NA, align = "right", na.rm = TRUE),
+      
+      # === Cross-Asset Features ===
+      # VIX vs realized vol
+      vix_realized_ratio = vix_close / pmax(realized_vol_20 * sqrt(252) * 100, 1e-6),  # Annualized
+      
+      # Yield curve features
+      yield_level = us10y_yield,
+      yield_ma = rollmean(us10y_yield, k = 20, align = "right", fill = NA),
+      yield_dev = us10y_yield - yield_ma,
+      
+      # Credit spread features (if available)
+      hy_level = if (has_hy_spread) hy_spread else NA_real_,
+      hy_ma = if (has_hy_spread) {
+        rollmean(hy_spread, k = 20, align = "right", fill = NA)
+      } else {
+        NA_real_
+      },
+      hy_dev = if (has_hy_spread) hy_spread - hy_ma else NA_real_,
+      
+      # === Interaction Features ===
+      # VIX * Return interaction (fear during down moves)
+      vix_r_interaction = vix_close * R,
+      
+      # Volume * Volatility
+      vol_vol_interaction = log_vol * realized_vol_20
     )
   
   # Drop rows where target is missing
   df <- df %>% filter(!is.na(R_next))
   
   # Build predictor matrix (exclude target and date)
-  predictor_cols <- c("dVIX", "slope", "dSlope", "d10Y", "dHY", "vol_surp", "range", "R", "R_lag1", "R_lag2")
+  predictor_cols <- c(
+    # Basic changes
+    "dVIX", "slope", "dSlope", "d10Y", "dHY",
+    # Volatility features
+    "realized_vol_5", "realized_vol_20", "vix_level", "vix_ma", "vix_dev",
+    # Volume features
+    "vol_surp", "vol_ma_ratio",
+    # Price/Technical features
+    "range", "ma_5", "ma_20", "ma_50", "price_ma5_ratio", "price_ma20_ratio", "ma_cross", "rsi",
+    # Momentum features
+    "R", "R_lag1", "R_lag2", "R_lag3", "R_lag5", "cumret_5", "cumret_20",
+    # Cross-asset features
+    "vix_realized_ratio", "yield_level", "yield_ma", "yield_dev", "hy_level", "hy_ma", "hy_dev",
+    # Interaction features
+    "vix_r_interaction", "vol_vol_interaction"
+  )
   available_predictors <- predictor_cols[predictor_cols %in% names(df)]
   
   # Check for >20% NA and drop those columns
@@ -442,12 +521,31 @@ enet_select <- function(train_data, predictors, cv_folds, output_dir) {
   X_train <- X_train[complete, , drop = FALSE]
   y_train <- y_train[complete]
   
-  # Standardize (store for later use)
+  message("  Normalizing features before elastic net regularization...")
+  message("  Training samples: ", nrow(X_train), ", Features: ", ncol(X_train))
+  
+  # Normalize/Standardize features (Z-score normalization)
+  # This ensures all features are on the same scale before regularization
   X_mean <- colMeans(X_train, na.rm = TRUE)
   X_sd <- apply(X_train, 2, sd, na.rm = TRUE)
-  X_sd[X_sd == 0] <- 1  # Avoid division by zero
   
+  # Handle zero variance features (set SD to 1 to avoid division by zero)
+  zero_var_features <- X_sd == 0 | is.na(X_sd)
+  if (any(zero_var_features)) {
+    warning("  Found ", sum(zero_var_features), " zero-variance features. Setting SD=1 for these.")
+    X_sd[zero_var_features] <- 1
+  }
+  
+  # Apply normalization: (X - mean) / sd
   X_train_scaled <- scale(X_train, center = X_mean, scale = X_sd)
+  
+  # Verify normalization: mean should be ~0, sd should be ~1
+  scaled_mean <- colMeans(X_train_scaled, na.rm = TRUE)
+  scaled_sd <- apply(X_train_scaled, 2, sd, na.rm = TRUE)
+  message("  Normalization verified - Mean (should be ~0): ", 
+          sprintf("[%.4f, %.4f]", min(scaled_mean), max(scaled_mean)),
+          ", SD (should be ~1): ", 
+          sprintf("[%.4f, %.4f]", min(scaled_sd), max(scaled_sd)))
   
   # Grid search over alpha
   alpha_grid <- c(0.1, 0.3, 0.5, 0.7, 0.9)
@@ -549,11 +647,29 @@ enet_select <- function(train_data, predictors, cv_folds, output_dir) {
   n_folds_used <- length(cv_folds)
   coef_stability <- coef_stability / n_folds_used
   
+  # Print all stability scores
+  stability_df <- tibble(
+    predictor = predictors,
+    stability = coef_stability
+  ) %>%
+    arrange(desc(stability))
+  
+  message("\n  Stability scores for all predictors:")
+  print(stability_df)
+  
   # Select predictors with stability >= 0.6
   selected_predictors <- predictors[coef_stability >= 0.6]
   
-  message("  Selected ", length(selected_predictors), " predictors (stability >= 0.6)")
+  message("\n  Selected ", length(selected_predictors), " predictors (stability >= 0.6)")
   message("    ", paste(selected_predictors, collapse = ", "))
+  
+  # Warn if too few predictors selected
+  if (length(selected_predictors) < 5) {
+    message("\n  WARNING: Only ", length(selected_predictors), " predictors selected. Consider:")
+    message("    - Lowering stability threshold (currently 0.6)")
+    message("    - Adding more sophisticated features")
+    message("    - Checking if features are too correlated")
+  }
   
   return(list(
     selected_predictors = selected_predictors,
