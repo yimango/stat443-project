@@ -6889,3 +6889,1276 @@ Running ARIMA backtest...
     ADF test p-value: 0.01
     KPSS test p-value: 0.1
     Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15365.99, BIC = -15331.07
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15371.71, BIC = -15336.78
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 13
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15373.5, BIC = -15338.57
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15378.49, BIC = -15343.55
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15384.95, BIC = -15350.02
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15392.08, BIC = -15357.14
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15399.23, BIC = -15364.29
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15406.09, BIC = -15371.14
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 13
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15413.26, BIC = -15378.31
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15417.1, BIC = -15382.15
+    Completed 400 / 528 folds
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(3,0,3) model:
+      AIC = -15423.58, BIC = -15376.98
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15430.31, BIC = -15395.36
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(3,0,3) model:
+      AIC = -15441.29, BIC = -15394.68
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15444.14, BIC = -15409.19
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15451.3, BIC = -15416.34
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15450.81, BIC = -15415.84
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15457.02, BIC = -15422.05
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15464.17, BIC = -15429.2
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15471.11, BIC = -15436.14
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15477.92, BIC = -15442.94
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15485.08, BIC = -15450.11
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15492.21, BIC = -15457.23
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15496.25, BIC = -15461.27
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15503.42, BIC = -15468.44
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15510.08, BIC = -15475.1
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15517.25, BIC = -15482.26
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15516.1, BIC = -15481.11
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15528.19, BIC = -15493.2
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(3,0,3) model:
+      AIC = -15536.01, BIC = -15489.35
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15542.3, BIC = -15507.3
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15549.77, BIC = -15514.77
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(3,0,3) model:
+      AIC = -15557.09, BIC = -15510.42
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15563.83, BIC = -15528.82
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15569.93, BIC = -15534.92
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15576.66, BIC = -15541.66
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15583.6, BIC = -15548.59
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15590.75, BIC = -15555.74
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15597.8, BIC = -15562.78
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15604.84, BIC = -15569.82
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15610.82, BIC = -15575.8
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15617.4, BIC = -15582.38
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15624, BIC = -15588.97
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15631.16, BIC = -15596.13
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15638.32, BIC = -15603.29
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15645.34, BIC = -15610.31
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15652.12, BIC = -15617.09
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15657.76, BIC = -15622.72
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15664.92, BIC = -15629.88
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15671.55, BIC = -15636.51
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15678.53, BIC = -15643.49
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15685.55, BIC = -15650.5
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15692.72, BIC = -15657.67
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15699.79, BIC = -15664.74
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15706.43, BIC = -15671.37
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15713.6, BIC = -15678.54
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15720.18, BIC = -15685.12
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15727.36, BIC = -15692.3
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15734.27, BIC = -15699.21
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15741.38, BIC = -15706.31
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15748.41, BIC = -15713.34
+    Completed 450 / 528 folds
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15755.57, BIC = -15720.5
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15762.58, BIC = -15727.5
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15769.71, BIC = -15734.63
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15776.59, BIC = -15741.51
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15783.76, BIC = -15748.68
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15790.94, BIC = -15755.85
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15798.11, BIC = -15763.02
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15804.84, BIC = -15769.75
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15812, BIC = -15776.91
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15819.1, BIC = -15784.01
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15826.28, BIC = -15791.18
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15833.39, BIC = -15798.3
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15840.51, BIC = -15805.41
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15847.6, BIC = -15812.5
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15852, BIC = -15816.89
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15857.54, BIC = -15822.44
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15864.62, BIC = -15829.51
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15871.48, BIC = -15836.37
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15878.64, BIC = -15843.53
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15885.3, BIC = -15850.19
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15892.39, BIC = -15857.28
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15898.46, BIC = -15863.34
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15905.61, BIC = -15870.49
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15912.77, BIC = -15877.65
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15919.75, BIC = -15884.62
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15926.92, BIC = -15891.79
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15933.57, BIC = -15898.44
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15940.77, BIC = -15905.64
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15947.74, BIC = -15912.6
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15953.13, BIC = -15917.99
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15960.23, BIC = -15925.09
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15967.36, BIC = -15932.21
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15974.49, BIC = -15939.35
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15981.58, BIC = -15946.43
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15988.35, BIC = -15953.2
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -15995.53, BIC = -15960.38
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -16002.06, BIC = -15966.9
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -16008.99, BIC = -15973.84
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -16015.72, BIC = -15980.57
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -16022.89, BIC = -15987.73
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -16030.07, BIC = -15994.91
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -16037.07, BIC = -16001.9
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -16044.33, BIC = -16009.16
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -16050.95, BIC = -16015.78
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(3,0,3) model:
+      AIC = -16058.45, BIC = -16011.55
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -16065.21, BIC = -16030.03
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -16072.39, BIC = -16037.22
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -16079.52, BIC = -16044.34
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(3,0,3) model:
+      AIC = -16086.83, BIC = -16039.92
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -16093.7, BIC = -16058.51
+    Completed 500 / 528 folds
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -16100.65, BIC = -16065.46
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -16107.71, BIC = -16072.52
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -16114.73, BIC = -16079.54
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -16121.73, BIC = -16086.54
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -16128.73, BIC = -16093.53
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -16135.86, BIC = -16100.66
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -16142.94, BIC = -16107.74
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -16150.08, BIC = -16114.88
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -16157.25, BIC = -16122.04
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -16164.42, BIC = -16129.22
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -16171.48, BIC = -16136.27
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -16178.51, BIC = -16143.3
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -16185.45, BIC = -16150.24
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -16192.59, BIC = -16157.37
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -16193.07, BIC = -16157.85
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -16199.07, BIC = -16163.84
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -16206.24, BIC = -16171.02
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -16213.35, BIC = -16178.13
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -16220.17, BIC = -16184.94
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -16227.1, BIC = -16191.87
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -16233.66, BIC = -16198.43
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -16240.79, BIC = -16205.56
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -16247.33, BIC = -16212.09
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -16254.04, BIC = -16218.8
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -16260.89, BIC = -16225.65
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -16266.67, BIC = -16231.43
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -16273.81, BIC = -16238.56
+  Fitting ARIMA models (d = 0)...
+  Inspecting series (Box-Jenkins identification)...
+    Suggested AR order (from PACF): p ≈ 16
+    Suggested MA order (from ACF): q ≈ 15
+    ADF test p-value: 0.01
+    KPSS test p-value: 0.1
+    Searching over p ∈ [0, 5], q ∈ [0, 5]
+    Best ARIMA(2,0,2) model:
+      AIC = -16281.01, BIC = -16245.76
+  ARIMA backtest complete: 528 successful forecasts
+  Average (p,q) selected: (2.55, 2.6)
+
+  Total backtest forecasts: 1584
+
+[Step 6] Evaluating models and generating plots...
+Running complete evaluation pipeline...
+Computing forecast accuracy metrics...
+Error in `filter()`:
+ℹ In argument: `!is.na(.data$forecast)`.
+Caused by error in `.data$forecast`:
+! Column `forecast` not found in `.data`.
+Backtrace:
+     ▆
+  1. ├─global main()
+  2. │ └─evaluate_all_models(all_results, output_dir = output_dir)
+  3. │   └─compute_metrics(backtest_results)
+  4. │     └─... %>% ...
+  5. ├─dplyr::filter(., !is.na(actual), !is.na(forecast), !is.na(error))
+  6. ├─dplyr::rename(., forecast = forecast_val)
+  7. ├─dplyr::mutate(...)
+  8. ├─dplyr::filter(...)
+  9. ├─dplyr:::filter.data.frame(., !is.na(.data$forecast), !is.na(.data$actual), !is.na(.data$error))
+ 10. │ └─dplyr:::filter_rows(.data, dots, by)
+ 11. │   └─dplyr:::filter_eval(...)
+ 12. │     ├─base::withCallingHandlers(...)
+ 13. │     └─mask$eval_all_filter(dots, env_filter)
+ 14. │       └─dplyr (local) eval()
+ 15. ├─forecast
+ 16. ├─rlang:::`$.rlang_data_pronoun`(.data, forecast)
+ 17. │ └─rlang:::data_pronoun_get(...)
+ 18. └─rlang:::abort_data_pronoun(x, call = y)
+ 19.   └─rlang::abort(msg, "rlang_error_data_pronoun_not_found", call = call)
+There were 50 or more warnings (use warnings() to see the first 50)
+Execution halted
