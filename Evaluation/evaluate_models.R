@@ -25,16 +25,39 @@ compute_metrics <- function(backtest_results) {
   message("Computing forecast accuracy metrics...")
   
   # Ensure numeric types and filter valid data
-  # Note: Use temporary column name to avoid conflict with forecast() function from forecast package
-  metrics_data <- backtest_results %>%
-    filter(!is.na(.data$forecast), !is.na(.data$actual), !is.na(.data$error)) %>%
-    mutate(
-      actual = as.numeric(.data$actual),
-      forecast_val = as.numeric(.data$forecast),  # Temporary name to avoid function conflict
-      error = as.numeric(.data$error)
-    ) %>%
-    rename(forecast = forecast_val) %>%  # Rename back
-    filter(!is.na(actual), !is.na(forecast), !is.na(error))
+  # Handle both standardized 'forecast' column and model-specific columns (forecast_ar, forecast_ma, forecast_arima)
+  
+  # Check if forecast column already exists (from standardized results)
+  if ("forecast" %in% names(backtest_results)) {
+    # Use existing forecast column
+    metrics_data <- backtest_results %>%
+      filter(!is.na(.data$forecast), !is.na(.data$actual), !is.na(.data$error)) %>%
+      mutate(
+        actual = as.numeric(.data$actual),
+        forecast = as.numeric(.data$forecast),
+        error = as.numeric(.data$error)
+      ) %>%
+      filter(!is.na(actual), !is.na(forecast), !is.na(error))
+  } else {
+    # Handle model-specific columns (legacy support)
+    forecast_cols <- c("forecast_ar", "forecast_ma", "forecast_arima")
+    existing_cols <- forecast_cols[forecast_cols %in% names(backtest_results)]
+    
+    if (length(existing_cols) > 0) {
+      # Create unified forecast column from model-specific columns
+      metrics_data <- backtest_results %>%
+        mutate(forecast = coalesce(!!!syms(existing_cols))) %>%
+        filter(!is.na(forecast), !is.na(.data$actual), !is.na(.data$error)) %>%
+        mutate(
+          actual = as.numeric(.data$actual),
+          forecast = as.numeric(forecast),
+          error = as.numeric(.data$error)
+        ) %>%
+        filter(!is.na(actual), !is.na(forecast), !is.na(error))
+    } else {
+      stop("No forecast column found. Expected 'forecast' or one of: forecast_ar, forecast_ma, forecast_arima")
+    }
+  }
   
   metrics <- metrics_data %>%
     group_by(model_name) %>%

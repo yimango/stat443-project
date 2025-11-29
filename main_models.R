@@ -134,6 +134,17 @@ main <- function() {
                                   d = prep_result$d, max_p = 5, max_q = 5)
   
   # Combine results
+  # Standardize forecast column names (models return forecast_ar, forecast_ma, forecast_arima)
+  if ("forecast_ar" %in% names(results_ar)) {
+    results_ar <- results_ar %>% rename(forecast = forecast_ar) %>% select(-any_of("p_used"))
+  }
+  if ("forecast_ma" %in% names(results_ma)) {
+    results_ma <- results_ma %>% rename(forecast = forecast_ma) %>% select(-any_of("q_used"))
+  }
+  if ("forecast_arima" %in% names(results_arima)) {
+    results_arima <- results_arima %>% rename(forecast = forecast_arima) %>% select(-any_of(c("p_used", "q_used")))
+  }
+  
   all_results <- bind_rows(
     results_ar %>% mutate(model_name = "AR"),
     results_ma %>% mutate(model_name = "MA"),
@@ -187,7 +198,12 @@ main <- function() {
 }
 
 # Run main function
+# If running as a script (non-interactive), run automatically
+# If sourcing interactively, you can call main() manually or it will run automatically
 if (!interactive()) {
   result <- main()
+} else {
+  # For interactive use: uncomment the line below to auto-run, or call main() manually
+  # result <- main()
 }
 
