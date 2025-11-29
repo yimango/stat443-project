@@ -1,8 +1,21 @@
 # SP500 Time-Series Forecasting Project
 
+## Quick Reference: Best Models
+
+- **Return Forecasting**: **ARIMA(2,0,2)** - RMSE: 0.0100 (best accuracy)
+- **Volatility Forecasting**: **GARCH(1,1)** - BIC: -6.64 (best fit)
+- See `MODEL_RESULTS.md` for detailed comparison and diagnostics
+
+---
+
 ## Project Overview
 
-This project implements a comprehensive time-series forecasting pipeline for SP500 daily returns using AR, MA, and ARIMA models following the Box-Jenkins methodology. The pipeline includes proper data preparation, model selection, backtesting, evaluation, and day-by-day forecasting.
+This project implements a comprehensive time-series forecasting pipeline for SP500 with two main focuses:
+
+1. **Return Forecasting**: Using AR, MA, and ARIMA models following the Box-Jenkins methodology
+2. **Volatility Forecasting**: Using GARCH and ARCH models to forecast conditional variance (risk)
+
+The pipeline includes proper data preparation, model selection, backtesting, evaluation, and day-by-day forecasting for both returns and volatility.
 
 ## Project Structure
 
@@ -14,12 +27,15 @@ stat443-project/
 ├── Models/
 │   ├── ar_model.R             # Autoregressive (AR) model implementation
 │   ├── ma_model.R             # Moving Average (MA) model implementation
-│   └── arima_model.R          # ARIMA model implementation (Box-Jenkins)
+│   ├── arima_model.R          # ARIMA model implementation (Box-Jenkins)
+│   ├── garch_model.R          # GARCH model for volatility forecasting
+│   └── arch_model.R           # ARCH model for volatility forecasting
 ├── Evaluation/
 │   ├── backtest.R             # Rolling-origin backtesting framework
 │   └── evaluate_models.R      # Model evaluation, metrics, and comparisons
 ├── main_models.R              # Main pipeline orchestrator
-├── forecast_sp500.R           # Day-by-day forecasting script
+├── forecast_sp500.R           # Day-by-day return forecasting script
+├── forecast_volatility.R      # Volatility forecasting script (GARCH/ARCH)
 ├── analyze_forecasts.R        # Forecast analysis and visualization
 ├── r_ready_data/              # Input data files (CSV format)
 │   ├── SPY_US_Equity.csv
@@ -123,6 +139,23 @@ stat443-project/
   2. **Estimation**: Grid search over p ∈ [0,5], q ∈ [0,5] with AIC/BIC
   3. **Diagnostic Checking**: Ljung-Box test for residual autocorrelation, Jarque-Bera for normality
 
+**GARCH Model (`Models/garch_model.R`):**
+- **Focus: Volatility Forecasting** (conditional variance)
+- GARCH(p,q) model: `σ²_t = ω + Σ(α_i * ε²_{t-i}) + Σ(β_j * σ²_{t-j})`
+- Models volatility clustering (high volatility periods followed by high volatility)
+- Grid search over p ∈ [1,2], q ∈ [1,2] with AIC/BIC
+- Uses `rugarch` package for estimation
+- Diagnostics: Ljung-Box on residuals and squared residuals (check for remaining ARCH effects)
+
+**ARCH Model (`Models/arch_model.R`):**
+- **Focus: Volatility Forecasting** (conditional variance)
+- ARCH(q) is special case: ARCH(q) = GARCH(0,q)
+- Model: `σ²_t = ω + Σ(α_i * ε²_{t-i})`
+- Simpler than GARCH, only uses past squared errors
+- Grid search over q ∈ [1,5] with AIC/BIC
+- Uses `rugarch` package for estimation
+- Diagnostics: Ljung-Box on residuals and squared residuals
+
 ### 3. Backtesting (`Evaluation/backtest.R`)
 
 **Rolling-Origin Backtesting:**
@@ -138,7 +171,44 @@ stat443-project/
 - Ensures no look-ahead bias
 - Provides realistic performance estimates
 
-### 4. Model Evaluation (`Evaluation/evaluate_models.R`)
+### 4. Volatility Models (GARCH/ARCH) - **Focus: Risk Forecasting**
+
+**Key Difference from AR/MA/ARIMA:**
+- AR/MA/ARIMA models forecast **returns** (mean): `E[r_t | I_{t-1}]`
+- GARCH/ARCH models forecast **volatility** (variance/risk): `Var[r_t | I_{t-1}] = σ²_t`
+
+**Why Volatility Matters:**
+- **Risk Management**: Higher volatility = higher risk, need to adjust position sizes
+- **Option Pricing**: Volatility is key input (Black-Scholes, etc.)
+- **Portfolio Optimization**: Risk-return tradeoff, efficient frontier
+- **Market Stress**: Volatility spikes indicate market stress/crises
+- **VaR Calculation**: Value-at-Risk depends on volatility forecasts
+
+**ARCH Model (Autoregressive Conditional Heteroskedasticity):**
+- Model: `σ²_t = ω + α₁ε²_{t-1} + α₂ε²_{t-2} + ... + α_qε²_{t-q}`
+- Only uses past squared errors (ARCH terms)
+- Simpler, fewer parameters
+- Good for capturing short-term volatility dynamics
+
+**GARCH Model (Generalized ARCH):**
+- Model: `σ²_t = ω + Σ(α_i * ε²_{t-i}) + Σ(β_j * σ²_{t-j})`
+- Uses both past squared errors (ARCH terms) AND past volatility (GARCH terms)
+- More flexible, captures volatility persistence better
+- Typically preferred for financial data
+- GARCH(1,1) is most common: `σ²_t = ω + αε²_{t-1} + βσ²_{t-1}`
+
+**Model Selection:**
+- Grid search over orders: GARCH(p,q) with p,q ∈ [1,2]
+- ARCH(q) with q ∈ [1,5]
+- Selection by AIC/BIC (lower is better)
+- Diagnostics: Ljung-Box on residuals and squared residuals
+
+**Volatility Clustering:**
+- Financial returns show volatility clustering (high vol → high vol, low vol → low vol)
+- GARCH/ARCH models explicitly model this phenomenon
+- Captures the "stylized fact" that volatility is time-varying and persistent
+
+### 5. Model Evaluation (`Evaluation/evaluate_models.R`)
 
 **Metrics Computed:**
 - **RMSE** (Root Mean Squared Error): Overall forecast accuracy
@@ -156,13 +226,39 @@ stat443-project/
 
 ## Model Selection Results
 
-### Performance Comparison
+### Return Forecasting Models
 
 | Model | RMSE | MAE | MAPE | Directional Accuracy |
 |-------|------|-----|------|---------------------|
 | **ARIMA** | **0.0100** | 0.00655 | 6439% | 49.6% |
 | AR | 0.0101 | 0.00653 | 6969% | 51.1% |
 | MA | 0.0101 | 0.00640 | 2838% | **53.4%** |
+
+### Volatility Forecasting Models
+
+**Note**: GARCH and ARCH models forecast volatility (not returns), so they use different metrics:
+- **Volatility RMSE**: Error in volatility forecasts
+- **Volatility MAE**: Mean absolute error in volatility
+- **Model Selection**: Based on AIC/BIC for volatility models
+
+**Model Comparison Results**:
+
+| Model | Order | AIC | BIC | Mean Forecast Volatility |
+|-------|-------|-----|-----|------------------------|
+| **GARCH** | **(1,1)** | **-6.65** | **-6.64** | **0.931%** |
+| ARCH | (1) | -6.14 | -6.14 | 1.152% |
+
+**Selected Model: GARCH(1,1)**
+- **Lower BIC** (-6.64 vs -6.14) - better model fit
+- **Lower AIC** (-6.65 vs -6.14) - better information criterion
+- **More realistic forecasts**: GARCH shows time-varying volatility (0.855% to 0.991%)
+- **ARCH limitation**: ARCH(1) produces constant volatility forecast (1.152%) - unrealistic
+
+**Key Findings**:
+- GARCH(1,1) is the standard model for financial volatility (most common in practice)
+- GARCH captures volatility persistence better than ARCH
+- Forecast shows volatility increasing from 0.855% to 0.991% over 21 days
+- Current volatility (0.749%) is below forecast mean (0.931%), suggesting increasing risk ahead
 
 ### Selected Model: ARIMA(2,0,2)
 
@@ -242,12 +338,23 @@ stat443-project/
 - **Consistent Growth Pattern**: Cumulative return increases steadily
 - **Moderate Uncertainty**: Prediction intervals show reasonable confidence
 
-### 3. Model Diagnostics
+### 3. Volatility Modeling Insights
+- **Best Model: GARCH(1,1)** - Selected based on BIC (-6.64 vs ARCH's -6.14)
+- **Volatility Clustering**: GARCH captures periods of high/low volatility with persistence
+- **Forecast Characteristics**: 
+  - Mean forecast volatility: 0.931% (vs historical 0.843%)
+  - Forecast range: 0.855% to 0.991% (time-varying, realistic)
+  - Suggests 10.4% increase in volatility ahead
+- **ARCH Limitation**: ARCH(1) produces constant volatility (1.152%) - unrealistic for financial markets
+- **Risk Assessment**: Volatility forecasts help assess market risk and position sizing
+- **Model Selection**: GARCH(1,1) is standard in finance due to volatility persistence
+
+### 4. Model Diagnostics
 - **ARIMA Residuals**: Some autocorrelation detected (Ljung-Box p < 0.05)
 - **Non-Normal Residuals**: Jarque-Bera test rejects normality (common in financial returns)
 - **Stationarity**: Returns confirmed stationary (ADF p < 0.05, KPSS p > 0.05)
 
-### 4. Limitations
+### 5. Limitations
 - **Short-Term Focus**: Models designed for 1-step-ahead forecasts
 - **No Exogenous Variables**: Pure time-series approach (could add VIX, yields, etc.)
 - **Assumes Stationarity**: May not capture structural breaks or regime changes
@@ -259,7 +366,12 @@ stat443-project/
 ```r
 # Required R packages
 install.packages(c("tidyverse", "forecast", "tseries", "patchwork", 
-                   "zoo", "glmnet", "KFAS", "yardstick"))
+                   "zoo", "glmnet", "KFAS", "yardstick", "rugarch"))
+```
+
+**Note**: `rugarch` package is required for GARCH/ARCH models. If installation fails due to dependencies, try:
+```r
+install.packages("rugarch", dependencies = TRUE, repos = "https://cloud.r-project.org")
 ```
 
 ### Main Pipeline
@@ -277,10 +389,16 @@ This will:
 5. Evaluate and compare models
 6. Generate all plots and metrics
 
-### Generate Forecasts
+### Generate Return Forecasts
 ```r
-# Generate day-by-day SP500 forecasts
+# Generate day-by-day SP500 return forecasts
 source("forecast_sp500.R")
+```
+
+### Generate Volatility Forecasts
+```r
+# Generate volatility forecasts using GARCH/ARCH models
+source("forecast_volatility.R")
 ```
 
 ### Analyze Forecasts
@@ -295,6 +413,8 @@ source("analyze_forecasts.R")
 - `ar_diagnostics.png` - AR model residual diagnostics
 - `ma_diagnostics.png` - MA model residual diagnostics
 - `arima_diagnostics.png` - ARIMA model residual diagnostics
+- `garch_diagnostics.png` - GARCH model volatility diagnostics (if run)
+- `arch_diagnostics.png` - ARCH model volatility diagnostics (if run)
 
 ### Evaluation Plots
 - `forecast_comparison.png` - Forecast vs actual for all models
@@ -304,9 +424,11 @@ source("analyze_forecasts.R")
 - `metrics_summary.png` - Model performance metrics visualization
 
 ### Forecast Outputs
-- `sp500_forecast.png` - Day-by-day forecast visualization
-- `forecast_analysis.png` - Comprehensive forecast analysis
-- `sp500_forecasts.csv` - Detailed forecast table with prediction intervals
+- `sp500_forecast.png` - Day-by-day return forecast visualization
+- `forecast_analysis.png` - Comprehensive return forecast analysis
+- `sp500_forecasts.csv` - Detailed return forecast table with prediction intervals
+- `volatility_forecast.png` - Volatility forecast visualization (GARCH vs ARCH)
+- `volatility_forecasts.csv` - Detailed volatility forecast table
 
 ### Metrics Files
 - `model_comparison_metrics.csv` - Detailed metrics for each model
@@ -354,11 +476,13 @@ source("analyze_forecasts.R")
 ## Future Enhancements
 
 1. **ARIMAX Models**: Include exogenous variables (VIX, yields, etc.)
-2. **GARCH Models**: Model volatility clustering
-3. **Regime-Switching**: Handle structural breaks
-4. **Ensemble Methods**: Combine multiple models
-5. **Machine Learning**: LSTM, XGBoost for comparison
-6. **Real-Time Updates**: Automate daily forecast generation
+2. **GARCH Extensions**: GJR-GARCH (leverage effects), EGARCH (asymmetric volatility)
+3. **Regime-Switching**: Handle structural breaks in volatility
+4. **Combined Models**: ARIMA-GARCH (model both mean and variance)
+5. **Ensemble Methods**: Combine multiple models
+6. **Machine Learning**: LSTM, XGBoost for comparison
+7. **Real-Time Updates**: Automate daily forecast generation
+8. **Volatility Trading**: Use volatility forecasts for VIX trading strategies
 
 ## References
 
@@ -406,12 +530,14 @@ source("analyze_forecasts.R")
 ### Important Numbers to Highlight:
 - **Variable Selection**: 8 predictors selected from 36 candidates (22% selection rate)
 - **Elastic Net**: α = 0.1, λ = 0.00378, CV RMSE = 0.005036
-- **ARIMA(2,0,2)** selected model
-- **RMSE**: 0.0100 (best among models)
+- **Return Models**: ARIMA(2,0,2) selected (RMSE: 0.0100, best among AR/MA/ARIMA)
+- **Volatility Models**: **GARCH(1,1)** selected (BIC: -6.64) vs ARCH(1) (BIC: -6.14)
+- **Volatility Forecast**: Mean 0.931% (10.4% above historical), range 0.855%-0.991%
 - **528 backtest folds** per model
 - **1.12% cumulative return** forecast (21 days)
 - **81% positive day** forecast rate
 - **4.36% average prediction interval** width
+- **Volatility Focus**: GARCH/ARCH models forecast risk, not returns
 
 ---
 
