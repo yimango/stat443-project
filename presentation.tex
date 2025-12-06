@@ -1,0 +1,426 @@
+\documentclass[aspectratio=169]{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{natbib}
+\usepackage{xcolor}
+
+% Beamer theme
+\usetheme{Madrid}
+\usecolortheme{default}
+
+% Title information
+\title{SP500 Time-Series Forecasting}
+\subtitle{A Box-Jenkins and GARCH Approach}
+\author{Justin Wang and Remi Liu}
+\institute{STAT 443\\2025}
+\date{November 2025}
+
+\begin{document}
+
+% Title slide
+\begin{frame}
+\titlepage
+\end{frame}
+
+% Outline
+\begin{frame}{Outline}
+\tableofcontents
+\end{frame}
+
+% ============================================
+% INTRODUCTION
+% ============================================
+\section{Introduction}
+
+\begin{frame}{Problem Statement}
+\begin{itemize}
+    \item \textbf{Objective}: Forecast SP500 returns and volatility using time-series methods
+    \item \textbf{Challenge}: Financial time series exhibit:
+    \begin{itemize}
+        \item Non-stationarity
+        \item Volatility clustering
+        \item Complex dependencies
+    \end{itemize}
+    \item \textbf{Approach}: 
+    \begin{itemize}
+        \item Box-Jenkins methodology (AR, MA, ARIMA) for returns
+        \item GARCH/ARCH models for volatility
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Why It Matters}
+\begin{columns}
+\column{0.5\textwidth}
+\textbf{Investment Management}
+\begin{itemize}
+    \item Portfolio allocation
+    \item Market timing
+    \item Risk-return tradeoffs
+\end{itemize}
+
+\column{0.5\textwidth}
+\textbf{Risk Management}
+\begin{itemize}
+    \item Value-at-Risk (VaR)
+    \item Position sizing
+    \item Hedging strategies
+\end{itemize}
+\end{columns}
+
+\vspace{0.5cm}
+\textbf{Derivatives Pricing}
+\begin{itemize}
+    \item Option pricing requires volatility forecasts
+    \item Black-Scholes and other models
+\end{itemize}
+\end{frame}
+
+% ============================================
+% DATA
+% ============================================
+\section{Data}
+
+\begin{frame}{Data Sources}
+\begin{itemize}
+    \item \textbf{Period}: October 1, 2015 to October 30, 2025
+    \item \textbf{Observations}: 2,631 daily observations
+    \item \textbf{Primary Data}:
+    \begin{itemize}
+        \item SP500 ETF (SPY): Daily closing prices
+        \item VIX Index: Market volatility expectations
+        \item 10-Year Treasury Yield: Risk-free rate proxy
+        \item High-Yield Credit Spread: Credit risk indicator
+    \end{itemize}
+    \item \textbf{Target Variable}: Daily log returns
+    \[
+    r_t = \log(P_t) - \log(P_{t-1})
+    \]
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Data Characteristics}
+\begin{columns}
+\column{0.5\textwidth}
+\textbf{Descriptive Statistics}
+\begin{itemize}
+    \item Mean return: 0.04\% daily
+    \item Std dev: 1\% daily
+    \item Distribution: Fat-tailed
+    \item Volatility clustering: Present
+\end{itemize}
+
+\column{0.5\textwidth}
+\textbf{Stationarity Tests}
+\begin{itemize}
+    \item ADF test: p $<$ 0.05
+    \item KPSS test: p $>$ 0.05
+    \item \textbf{Result}: Returns are stationary (d=0)
+    \item No differencing required
+\end{itemize}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Feature Engineering}
+\begin{itemize}
+    \item Created \textbf{36 potential predictors} from raw market data
+    \item Categories:
+    \begin{itemize}
+        \item Lagged returns (R\_lag1, R\_lag2, R\_lag5)
+        \item Realized volatility (5-day, 20-day)
+        \item Technical indicators (RSI, moving averages)
+        \item Cross-asset features (VIX ratios, yield curves)
+        \item Interaction terms
+    \end{itemize}
+    \item \textbf{Variable Selection}: Elastic Net regularization
+    \begin{itemize}
+        \item Selected \textbf{8 predictors} (22\% selection rate)
+        \item Stability threshold: $\geq$ 0.6
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+% ============================================
+% METHODOLOGY
+% ============================================
+\section{Methodology}
+
+\begin{frame}{Box-Jenkins Methodology}
+\textbf{Three-Step Procedure}:
+\begin{enumerate}
+    \item \textbf{Identification}
+    \begin{itemize}
+        \item ACF/PACF analysis
+        \item Stationarity testing
+    \end{itemize}
+    \item \textbf{Estimation}
+    \begin{itemize}
+        \item Grid search: AR($p$), MA($q$), ARIMA($p,0,q$)
+        \item Selection criteria: AIC, BIC
+    \end{itemize}
+    \item \textbf{Diagnostic Checking}
+    \begin{itemize}
+        \item Ljung-Box test (residual autocorrelation)
+        \item Jarque-Bera test (normality)
+        \item Residual plots
+    \end{itemize}
+\end{enumerate}
+\end{frame}
+
+\begin{frame}{Volatility Models}
+\begin{columns}
+\column{0.5\textwidth}
+\textbf{ARCH(q) Model}
+\[
+\sigma_t^2 = \omega + \sum_{i=1}^{q} \alpha_i \varepsilon_{t-i}^2
+\]
+\begin{itemize}
+    \item Models volatility using past squared errors
+    \item Simpler, fewer parameters
+\end{itemize}
+
+\column{0.5\textwidth}
+\textbf{GARCH(p,q) Model}
+\[
+\sigma_t^2 = \omega + \sum_{i=1}^{q} \alpha_i \varepsilon_{t-i}^2 + \sum_{j=1}^{p} \beta_j \sigma_{t-j}^2
+\]
+\begin{itemize}
+    \item Includes lagged variance terms
+    \item Captures volatility persistence
+    \item GARCH(1,1) is standard in finance
+\end{itemize}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Backtesting Procedure}
+\begin{itemize}
+    \item \textbf{Training Set}: 80\% (2015-10-01 to 2023-10-23)
+    \item \textbf{Test Set}: 20\% (2023-10-24 to 2025-10-30)
+    \item \textbf{Method}: Rolling-origin expanding window
+    \item \textbf{Forecast Horizon}: 1-step-ahead
+    \item \textbf{Test Folds}: 528 (one per test observation)
+    \item \textbf{No Future Leakage}: Each forecast uses only past data
+\end{itemize}
+
+\vspace{0.3cm}
+\textbf{Evaluation Metrics}:
+\begin{itemize}
+    \item RMSE, MAE, MAPE
+    \item Directional accuracy
+    \item Diebold-Mariano test
+\end{itemize}
+\end{frame}
+
+% ============================================
+% RESULTS
+% ============================================
+\section{Results}
+
+\begin{frame}{Model Selection: Return Forecasting}
+\begin{table}
+\centering
+\small
+\begin{tabular}{lcccc}
+\toprule
+Model & RMSE & MAE & MAPE (\%) & Dir. Acc. (\%) \\
+\midrule
+\textbf{ARIMA(2,0,2)} & \textbf{0.0100} & 0.00655 & 6439 & 49.6 \\
+AR(8) & 0.0101 & 0.00653 & 6969 & 51.1 \\
+MA(2) & 0.0101 & 0.00640 & 2838 & \textbf{53.4} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\vspace{0.3cm}
+\textbf{Selected: ARIMA(2,0,2)}
+\begin{itemize}
+    \item Lowest RMSE (best overall accuracy)
+    \item AIC: -16,287.1, BIC: -16,251.85
+    \item Combines AR and MA components
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Model Selection: Volatility Forecasting}
+\begin{table}
+\centering
+\small
+\begin{tabular}{lcccc}
+\toprule
+Model & Order & AIC & BIC & Mean Vol. (\%) \\
+\midrule
+\textbf{GARCH} & \textbf{(1,1)} & \textbf{-6.65} & \textbf{-6.64} & \textbf{0.931} \\
+ARCH & (1) & -6.14 & -6.14 & 1.152 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\vspace{0.3cm}
+\textbf{Selected: GARCH(1,1)}
+\begin{itemize}
+    \item Lower BIC (-6.64 vs -6.14)
+    \item Time-varying volatility (0.855\% to 0.991\%)
+    \item ARCH produces constant volatility (unrealistic)
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Model Diagnostics}
+\begin{columns}
+\column{0.5\textwidth}
+\textbf{ARIMA(2,0,2)}
+\begin{itemize}
+    \item Ljung-Box: Some residual autocorrelation (acceptable)
+    \item Jarque-Bera: Non-normal residuals (expected)
+    \item Residual ACF: Mostly within bands
+\end{itemize}
+
+\column{0.5\textwidth}
+\textbf{GARCH(1,1)}
+\begin{itemize}
+    \item Residuals: White noise
+    \item Squared residuals: No ARCH effects
+    \item Volatility clustering: Captured
+\end{itemize}
+\end{columns}
+
+\vspace{0.5cm}
+\textbf{Diebold-Mariano Tests}:
+\begin{itemize}
+    \item No statistically significant differences between AR, MA, ARIMA
+    \item All models have similar predictive power
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Return Forecasts}
+\textbf{21-Day Forecast (Oct 31 - Nov 28, 2025)}:
+\begin{itemize}
+    \item \textbf{Cumulative Return}: +1.12\%
+    \item \textbf{Annualized}: $\sim$13.4\%
+    \item \textbf{Directional}: 81\% positive days (17 up, 4 down)
+    \item \textbf{Mean Daily Return}: +0.053\%
+    \item \textbf{Prediction Intervals}: 95\% width averages 4.36\%
+\end{itemize}
+
+\vspace{0.3cm}
+\textbf{Interpretation}:
+\begin{itemize}
+    \item Bullish short-term outlook
+    \item Moderate volatility expected
+    \item Wide prediction intervals reflect uncertainty
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Volatility Forecasts}
+\textbf{GARCH(1,1) Forecast}:
+\begin{itemize}
+    \item \textbf{Mean Volatility}: 0.931\% (vs historical: 0.843\%)
+    \item \textbf{Range}: 0.855\% to 0.991\% (time-varying)
+    \item \textbf{Change}: +10.4\% increase from historical mean
+    \item \textbf{Trend}: Gradually increasing over 21 days
+\end{itemize}
+
+\vspace{0.3cm}
+\textbf{Implications}:
+\begin{itemize}
+    \item Increasing market risk ahead
+    \item Consider reducing position sizes
+    \item Increase hedging activities
+    \item Adjust VaR calculations upward
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Forecast Visualization}
+\begin{center}
+\includegraphics[width=0.85\textwidth]{outputs/sp500_forecast.png}
+\end{center}
+\end{frame}
+
+\begin{frame}{Volatility Forecast Visualization}
+\begin{center}
+\includegraphics[width=0.85\textwidth]{outputs/volatility_forecast.png}
+\end{center}
+\end{frame}
+
+% ============================================
+% CONCLUSIONS
+% ============================================
+\section{Conclusions}
+
+\begin{frame}{Key Findings}
+\begin{enumerate}
+    \item \textbf{Best Return Model}: ARIMA(2,0,2)
+    \begin{itemize}
+        \item RMSE: 0.0100 (best accuracy)
+        \item All models show similar performance
+    \end{itemize}
+    
+    \item \textbf{Best Volatility Model}: GARCH(1,1)
+    \begin{itemize}
+        \item BIC: -6.64 (clearly superior to ARCH)
+        \item Produces realistic time-varying forecasts
+    \end{itemize}
+    
+    \item \textbf{Forecast Insights}:
+    \begin{itemize}
+        \item Bullish short-term outlook (+1.12\% over 21 days)
+        \item Increasing volatility (+10.4\% from historical)
+    \end{itemize}
+\end{enumerate}
+\end{frame}
+
+\begin{frame}{Practical Implications}
+\begin{columns}
+\column{0.5\textwidth}
+\textbf{Investment Strategy}
+\begin{itemize}
+    \item Maintain equity exposure
+    \item 81\% positive days forecast
+    \item But account for uncertainty
+\end{itemize}
+
+\column{0.5\textwidth}
+\textbf{Risk Management}
+\begin{itemize}
+    \item Reduce position sizes
+    \item Increase hedging
+    \item Adjust VaR upward
+\end{itemize}
+\end{columns}
+
+\vspace{0.5cm}
+\textbf{Caveat}: Forecasts are probabilistic, not deterministic. Actual outcomes may differ, especially during unexpected market events.
+\end{frame}
+
+\begin{frame}{Limitations and Future Work}
+\textbf{Limitations}:
+\begin{itemize}
+    \item Stationarity assumption may not hold during regime changes
+    \item Linear models may miss non-linear dependencies
+    \item Short-term focus (1-step-ahead forecasts)
+    \item No exogenous variables in pure time-series approach
+\end{itemize}
+
+\vspace{0.3cm}
+\textbf{Future Improvements}:
+\begin{itemize}
+    \item ARIMAX models with external predictors
+    \item GARCH extensions (GJR-GARCH, EGARCH)
+    \item Regime-switching models
+    \item Machine learning comparisons (LSTM, XGBoost)
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Summary}
+\begin{itemize}
+    \item Successfully applied Box-Jenkins and GARCH methodologies to SP500 forecasting
+    \item Selected ARIMA(2,0,2) for returns and GARCH(1,1) for volatility
+    \item Generated practical forecasts with prediction intervals
+    \item Provided actionable insights for investment and risk management
+\end{itemize}
+
+\end{frame}
+
+\end{document}
+

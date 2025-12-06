@@ -1,0 +1,557 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{geometry}
+\geometry{margin=1in}
+\usepackage{natbib}
+\usepackage{hyperref}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{enumitem}
+\usepackage{xcolor}
+
+\title{SP500 Time-Series Forecasting: A Box-Jenkins and GARCH Approach}
+\author{Justin Wang and Remi Liu}
+\date{STAT 443\\2025}
+
+\begin{document}
+
+\maketitle
+
+\newpage
+\tableofcontents
+\newpage
+
+\section{Introduction and Motivation}
+
+The Standard \& Poor's 500 (SP500) index represents one of the most widely followed equity benchmarks in global financial markets. Accurate forecasting of SP500 returns and volatility is crucial for investment decision-making, risk management, and portfolio optimization. This project applies time-series analysis methods, specifically the Box-Jenkins methodology for return forecasting and GARCH models for volatility forecasting, to predict future SP500 movements.
+
+\subsection{Problem Statement}
+
+Financial time series exhibit several challenging characteristics: non-stationarity, volatility clustering, and complex dependencies. Traditional regression models often fail to capture these dynamics adequately. This project addresses the forecasting problem using specialized time-series models that account for:
+\begin{itemize}
+    \item Autocorrelation in returns (AR, MA, ARIMA models)
+    \item Time-varying volatility (GARCH, ARCH models)
+    \item Proper model selection and diagnostic procedures
+\end{itemize}
+
+\subsection{Objectives}
+
+The primary objectives of this project are:
+\begin{enumerate}
+    \item To develop and compare multiple time-series models for SP500 return forecasting using the Box-Jenkins methodology
+    \item To model and forecast SP500 volatility using GARCH and ARCH models
+    \item To evaluate model performance using rigorous out-of-sample backtesting procedures
+    \item To generate practical forecasts with prediction intervals for investment decision-making
+\end{enumerate}
+
+\subsection{Why It Matters}
+
+Accurate SP500 forecasting has significant practical implications:
+\begin{itemize}
+    \item \textbf{Investment Management}: Portfolio managers use forecasts to adjust asset allocation and timing decisions
+    \item \textbf{Risk Management}: Volatility forecasts are essential for Value-at-Risk (VaR) calculations and position sizing
+    \item \textbf{Derivatives Pricing}: Option pricing models (e.g., Black-Scholes) require volatility forecasts
+    \item \textbf{Market Timing}: Short-term return forecasts can inform tactical asset allocation strategies
+\end{itemize}
+
+\section{Data}
+
+\subsection{Data Sources and Description}
+
+The dataset consists of daily market data from October 1, 2015 to October 30, 2025, totaling 2,631 observations after removing the first observation (required for return calculation). The primary data sources include:
+
+\begin{itemize}
+    \item \textbf{SP500 ETF (SPY)}: Daily closing prices, used to compute log returns
+    \item \textbf{VIX Index}: Market volatility expectations (CBOE Volatility Index)
+    \item \textbf{10-Year Treasury Yield (USGG10YR)}: Risk-free rate proxy
+    \item \textbf{High-Yield Credit Spread (USOHHYTO)}: Credit risk indicator
+    \item \textbf{UX1 Index}: Additional volatility measure
+\end{itemize}
+
+\subsection{Target Variable Construction}
+
+The target variable is the daily log return of SP500:
+\begin{equation}
+    r_t = \log(P_t) - \log(P_{t-1})
+\end{equation}
+where $P_t$ is the closing price on day $t$. Log returns are preferred over simple returns because they are approximately normally distributed for small changes and have better statistical properties for time-series modeling.
+
+\subsection{Descriptive Statistics}
+
+The daily log returns exhibit typical characteristics of financial time series:
+\begin{itemize}
+    \item Mean daily return: approximately 0.0004 (0.04\%)
+    \item Standard deviation: approximately 0.01 (1\%)
+    \item Distribution: Approximately symmetric but with fat tails (leptokurtic)
+    \item Volatility clustering: Periods of high volatility followed by high volatility, and low volatility followed by low volatility
+\end{itemize}
+
+\subsection{Stationarity Testing}
+
+Before applying time-series models, we tested the stationarity of the return series using two complementary tests:
+
+\begin{enumerate}
+    \item \textbf{Augmented Dickey-Fuller (ADF) Test}: Tests the null hypothesis of a unit root (non-stationarity)
+    \item \textbf{KPSS Test}: Tests the null hypothesis of stationarity
+\end{enumerate}
+
+Results confirm that log returns are stationary (d=0):
+\begin{itemize}
+    \item ADF test: p-value < 0.05 (rejects non-stationarity)
+    \item KPSS test: p-value > 0.05 (does not reject stationarity)
+\end{itemize}
+
+Therefore, no differencing is required for the return series, and we proceed with ARIMA(p,0,q) models.
+
+\subsection{Data Issues and Solutions}
+
+Several data quality issues were addressed:
+
+\begin{itemize}
+    \item \textbf{Missing Values}: Some market indicators had missing values. Predictors with more than 20\% missing values were excluded from analysis.
+    \item \textbf{Outliers}: Extreme returns during market stress periods (e.g., COVID-19) were retained as they represent genuine market behavior that models should capture.
+    \item \textbf{Feature Engineering}: Created 36 potential predictors from raw market data, including:
+    \begin{itemize}
+        \item Lagged returns (R\_lag1, R\_lag2, R\_lag5)
+        \item Realized volatility measures (5-day and 20-day rolling standard deviations)
+        \item Technical indicators (RSI, moving averages, price ratios)
+        \item Cross-asset features (VIX-to-realized-volatility ratios, yield curve features)
+        \item Interaction terms (volume-volatility interactions)
+    \end{itemize}
+\end{itemize}
+
+\section{Methodology}
+
+This section describes the modeling approach following the PPDAC framework's Plan component.
+
+\subsection{Variable Selection: Elastic Net Regularization}
+
+Before applying Box-Jenkins models, we performed variable selection using Elastic Net regularization to identify the most relevant predictors from the 36 engineered features. Elastic Net combines L1 (Lasso) and L2 (Ridge) penalties:
+
+\begin{equation}
+    \text{Penalty} = \alpha \|\beta\|_1 + (1-\alpha)\|\beta\|_2^2
+\end{equation}
+
+where $\alpha \in [0,1]$ controls the mix between Lasso ($\alpha=1$) and Ridge ($\alpha=0$).
+
+\subsubsection{Selection Procedure}
+
+\begin{enumerate}
+    \item \textbf{Normalization}: All predictors were standardized (Z-score normalization) to ensure fair comparison
+    \item \textbf{Grid Search}: Tested $\alpha$ values: [0.1, 0.3, 0.5, 0.7, 0.9]
+    \item \textbf{Cross-Validation}: Time-safe 5-fold CV to select optimal $\lambda$ for each $\alpha$
+    \item \textbf{Selection Metric}: RMSE (Root Mean Squared Error)
+    \item \textbf{Stability Score}: Fraction of CV folds where coefficient $\neq 0$ (measures predictor reliability)
+    \item \textbf{Final Selection}: Predictors with stability $\geq 0.6$ were retained
+\end{enumerate}
+
+\subsubsection{Selected Predictors}
+
+Eight predictors were selected from 36 candidates (22\% selection rate):
+\begin{itemize}
+    \item \textbf{realized\_vol\_20} (stability: 0.6): 20-day realized volatility
+    \item \textbf{rsi} (stability: 0.8): Relative Strength Index
+    \item \textbf{R\_lag5} (stability: 1.0): 5-day lagged return
+    \item \textbf{cumret\_5} (stability: 1.0): 5-day cumulative return
+    \item \textbf{vix\_realized\_ratio} (stability: 1.0): VIX to realized volatility ratio
+    \item \textbf{hy\_level} (stability: 1.0): High-yield credit spread level
+    \item \textbf{hy\_dev} (stability: 0.8): High-yield spread deviation from mean
+    \item \textbf{vol\_vol\_interaction} (stability: 0.6): Volume $\times$ volatility interaction
+\end{itemize}
+
+Optimal hyperparameters: $\alpha = 0.1$ (Ridge-like, prefers grouped selection), $\lambda = 0.00378$, CV RMSE = 0.005036.
+
+\subsection{Box-Jenkins Methodology}
+
+The Box-Jenkins approach \citep{box1976time} is a systematic three-step procedure for ARIMA model selection:
+
+\subsubsection{Step 1: Identification}
+
+\begin{itemize}
+    \item \textbf{ACF Analysis}: Examined autocorrelation function to identify MA components
+    \item \textbf{PACF Analysis}: Examined partial autocorrelation function to identify AR components
+    \item \textbf{Stationarity}: Confirmed returns are stationary (d=0) via ADF and KPSS tests
+\end{itemize}
+
+\subsubsection{Step 2: Estimation}
+
+Grid search over parameter space:
+\begin{itemize}
+    \item \textbf{AR Models}: Tested orders $p \in \{1, 2, \ldots, 8\}$
+    \item \textbf{MA Models}: Tested orders $q \in \{1, 2, \ldots, 8\}$
+    \item \textbf{ARIMA Models}: Tested combinations with $p \in \{0, 1, \ldots, 5\}$, $q \in \{0, 1, \ldots, 5\}$, $d=0$
+    \item \textbf{Selection Criteria}: AIC (Akaike Information Criterion) and BIC (Bayesian Information Criterion), with lower values indicating better fit
+\end{itemize}
+
+\subsubsection{Step 3: Diagnostic Checking}
+
+For each candidate model, we performed:
+\begin{itemize}
+    \item \textbf{Ljung-Box Test}: Tests residual autocorrelation (null: residuals are white noise)
+    \item \textbf{Jarque-Bera Test}: Tests residual normality (null: residuals are normally distributed)
+    \item \textbf{Residual Plots}: ACF/PACF of residuals, Q-Q plots, time series plots
+\end{itemize}
+
+\subsection{Volatility Models: GARCH and ARCH}
+
+While ARIMA models forecast the \textit{mean} (expected return), GARCH and ARCH models forecast the \textit{variance} (volatility/risk). This is crucial for risk management.
+
+\subsubsection{ARCH Model}
+
+The ARCH(q) model \citep{engle1982autoregressive} specifies conditional variance as:
+\begin{equation}
+    \sigma_t^2 = \omega + \sum_{i=1}^{q} \alpha_i \varepsilon_{t-i}^2
+\end{equation}
+where $\varepsilon_t$ are the residuals from the mean equation.
+
+\subsubsection{GARCH Model}
+
+The GARCH(p,q) model \citep{bollerslev1986generalized} extends ARCH by including lagged variance terms:
+\begin{equation}
+    \sigma_t^2 = \omega + \sum_{i=1}^{q} \alpha_i \varepsilon_{t-i}^2 + \sum_{j=1}^{p} \beta_j \sigma_{t-j}^2
+\end{equation}
+
+GARCH(1,1) is the most common specification:
+\begin{equation}
+    \sigma_t^2 = \omega + \alpha \varepsilon_{t-1}^2 + \beta \sigma_{t-1}^2
+\end{equation}
+
+\subsubsection{Model Selection}
+
+\begin{itemize}
+    \item Tested GARCH(p,q) with $p, q \in \{1, 2\}$
+    \item Tested ARCH(q) with $q \in \{1, 2, \ldots, 5\}$
+    \item Selected based on AIC and BIC (lower is better)
+    \item Diagnostics: Ljung-Box tests on residuals and squared residuals (to check for remaining ARCH effects)
+\end{itemize}
+
+\subsection{Backtesting Procedure}
+
+To ensure realistic performance evaluation, we implemented rolling-origin backtesting:
+
+\begin{itemize}
+    \item \textbf{Training Set}: 80\% of data (2015-10-01 to 2023-10-23)
+    \item \textbf{Test Set}: 20\% of data (2023-10-24 to 2025-10-30)
+    \item \textbf{Method}: Expanding window (for each test point, use all data up to that point)
+    \item \textbf{Forecast Horizon}: 1-step-ahead forecasts
+    \item \textbf{Total Test Folds}: 528 (one per test observation)
+    \item \textbf{No Future Leakage}: Each forecast uses only information available at that time
+\end{itemize}
+
+\subsection{Evaluation Metrics}
+
+Model performance was assessed using multiple metrics:
+
+\begin{itemize}
+    \item \textbf{RMSE}: Root Mean Squared Error = $\sqrt{\frac{1}{n}\sum_{i=1}^{n}(y_i - \hat{y}_i)^2}$
+    \item \textbf{MAE}: Mean Absolute Error = $\frac{1}{n}\sum_{i=1}^{n}|y_i - \hat{y}_i|$
+    \item \textbf{MAPE}: Mean Absolute Percentage Error = $\frac{100}{n}\sum_{i=1}^{n}\left|\frac{y_i - \hat{y}_i}{y_i}\right|$
+    \item \textbf{Directional Accuracy}: Percentage of forecasts with correct sign (up/down prediction)
+    \item \textbf{Diebold-Mariano Test}: Statistical test for comparing forecast accuracy between models
+\end{itemize}
+
+\section{Results}
+
+\subsection{Model Selection Results}
+
+\subsubsection{Return Forecasting Models}
+
+Table \ref{tab:return_models} summarizes the out-of-sample performance of AR, MA, and ARIMA models.
+
+\begin{table}[H]
+\centering
+\caption{Out-of-Sample Performance: Return Forecasting Models}
+\label{tab:return_models}
+\begin{tabular}{lcccc}
+\toprule
+Model & RMSE & MAE & MAPE (\%) & Directional Accuracy (\%) \\
+\midrule
+\textbf{ARIMA(2,0,2)} & \textbf{0.0100} & 0.00655 & 6439 & 49.6 \\
+AR(8) & 0.0101 & 0.00653 & 6969 & 51.1 \\
+MA(2) & 0.0101 & 0.00640 & 2838 & \textbf{53.4} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{Selected Model: ARIMA(2,0,2)}
+\begin{itemize}
+    \item Lowest RMSE (0.0100), indicating best overall forecast accuracy
+    \item AIC: -16,287.1, BIC: -16,251.85
+    \item Combines benefits of both AR and MA components
+    \item Better captures complex return dynamics than pure AR or MA models
+\end{itemize}
+
+\subsubsection{Volatility Forecasting Models}
+
+Table \ref{tab:volatility_models} compares GARCH and ARCH models.
+
+\begin{table}[H]
+\centering
+\caption{Volatility Model Comparison}
+\label{tab:volatility_models}
+\begin{tabular}{lcccc}
+\toprule
+Model & Order & AIC & BIC & Mean Forecast Volatility (\%) \\
+\midrule
+\textbf{GARCH} & \textbf{(1,1)} & \textbf{-6.65} & \textbf{-6.64} & \textbf{0.931} \\
+ARCH & (1) & -6.14 & -6.14 & 1.152 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{Selected Model: GARCH(1,1)}
+\begin{itemize}
+    \item Lower BIC (-6.64 vs -6.14), indicating better model fit
+    \item Lower AIC (-6.65 vs -6.14)
+    \item Produces time-varying volatility forecasts (0.855\% to 0.991\%), more realistic than ARCH's constant forecast
+    \item GARCH(1,1) is the standard model in finance due to its ability to capture volatility persistence
+\end{itemize}
+
+\subsection{Model Diagnostics}
+
+\subsubsection{ARIMA(2,0,2) Diagnostics}
+
+\begin{itemize}
+    \item \textbf{Ljung-Box Test}: Some residual autocorrelation detected (p < 0.05), but within acceptable range for financial data
+    \item \textbf{Jarque-Bera Test}: Residuals are non-normal (p < 0.05), which is common in financial returns due to fat tails
+    \item \textbf{Residual ACF/PACF}: Most autocorrelations within 95\% confidence bands
+    \item \textbf{Q-Q Plot}: Shows deviations from normality in the tails, consistent with financial return distributions
+\end{itemize}
+
+\subsubsection{GARCH(1,1) Diagnostics}
+
+\begin{itemize}
+    \item \textbf{Ljung-Box Test (Residuals)}: Residuals are approximately white noise
+    \item \textbf{Ljung-Box Test (Squared Residuals)}: No remaining ARCH effects (squared residuals are white noise)
+    \item \textbf{Volatility Clustering}: Successfully captured, as evidenced by the time-varying conditional variance
+\end{itemize}
+
+\subsection{Out-of-Sample Performance}
+
+The rolling-origin backtest with 528 test folds provides realistic performance estimates:
+
+\begin{itemize}
+    \item \textbf{ARIMA(2,0,2)}: RMSE = 0.0100, MAE = 0.00655, Directional Accuracy = 49.6\%
+    \item \textbf{AR(8)}: RMSE = 0.0101, MAE = 0.00653, Directional Accuracy = 51.1\%
+    \item \textbf{MA(2)}: RMSE = 0.0101, MAE = 0.00640, Directional Accuracy = 53.4\%
+\end{itemize}
+
+\subsubsection{Diebold-Mariano Tests}
+
+Pairwise comparisons using the Diebold-Mariano test:
+\begin{itemize}
+    \item AR vs MA: Not significantly different (p = 0.75)
+    \item AR vs ARIMA: Not significantly different (p = 0.44)
+    \item MA vs ARIMA: Not significantly different (p = 0.51)
+\end{itemize}
+
+While ARIMA has the lowest RMSE, the differences are not statistically significant at conventional levels. This suggests that all three models have similar predictive power, with ARIMA having a slight edge.
+
+\subsection{Forecasts}
+
+\subsubsection{Return Forecasts}
+
+Using the selected ARIMA(2,0,2) model, we generated 21-day ahead forecasts for the period October 31 to November 28, 2025:
+
+\begin{itemize}
+    \item \textbf{Cumulative Return Forecast}: +1.12\%
+    \item \textbf{Annualized Return} (approximate): $\sim$13.4\%
+    \item \textbf{Mean Daily Return}: +0.053\%
+    \item \textbf{Directional Forecast}: 81\% positive days (17 up, 4 down)
+    \item \textbf{Average Up Day}: +0.073\%
+    \item \textbf{Average Down Day}: -0.033\%
+    \item \textbf{Prediction Intervals}: 95\% interval width averages 4.36\% daily
+\end{itemize}
+
+The forecast suggests a bullish short-term outlook with moderate volatility.
+
+\subsubsection{Volatility Forecasts}
+
+Using the selected GARCH(1,1) model, volatility forecasts for the same period:
+
+\begin{itemize}
+    \item \textbf{Mean Forecast Volatility}: 0.931\% (vs historical mean: 0.843\%)
+    \item \textbf{Forecast Range}: 0.855\% to 0.991\% (time-varying)
+    \item \textbf{Change from Historical}: +10.4\% increase in volatility
+    \item \textbf{Current Volatility}: 0.749\% (below forecast mean)
+\end{itemize}
+
+The forecast indicates increasing market risk ahead, with volatility gradually rising from 0.855\% to 0.991\% over the 21-day period.
+
+\section{Statistical Conclusions}
+
+\subsection{Model Comparison}
+
+\subsubsection{Return Forecasting}
+
+Among AR, MA, and ARIMA models:
+\begin{itemize}
+    \item \textbf{ARIMA(2,0,2)} is selected based on lowest RMSE (0.0100)
+    \item All models show similar performance (RMSE $\approx$ 0.010), suggesting limited predictability in daily returns
+    \item MA model has best directional accuracy (53.4\%), but difference is small
+    \item Diebold-Mariano tests indicate no statistically significant differences between models
+\end{itemize}
+
+\subsubsection{Volatility Forecasting}
+
+Between GARCH and ARCH models:
+\begin{itemize}
+    \item \textbf{GARCH(1,1)} is clearly superior (BIC: -6.64 vs -6.14)
+    \item GARCH produces realistic time-varying volatility forecasts
+    \item ARCH(1) produces constant volatility (1.152\%), which is unrealistic for financial markets
+    \item GARCH's ability to model volatility persistence makes it the standard choice in finance
+\end{itemize}
+
+\subsection{Forecast Accuracy Assessment}
+
+\begin{itemize}
+    \item \textbf{Return Forecasts}: RMSE of 0.0100 corresponds to approximately 1\% daily forecast error, which is reasonable given the inherent unpredictability of financial markets
+    \item \textbf{Directional Accuracy}: 49.6\% for ARIMA is close to random (50\%), indicating limited directional predictability
+    \item \textbf{Volatility Forecasts}: GARCH(1,1) successfully captures volatility clustering and provides time-varying forecasts
+    \item \textbf{Prediction Intervals}: 95\% intervals are appropriately wide (4.36\% average width), reflecting forecast uncertainty
+\end{itemize}
+
+\subsection{Limitations and Assumptions}
+
+\begin{enumerate}
+    \item \textbf{Stationarity Assumption}: Models assume return series is stationary, which may not hold during structural breaks or regime changes
+    \item \textbf{Linearity}: ARIMA models are linear and may miss non-linear dependencies
+    \item \textbf{Short-Term Focus}: Models are designed for 1-step-ahead forecasts; multi-step forecasts have increasing uncertainty
+    \item \textbf{No Exogenous Variables}: Pure time-series approach; could be extended to ARIMAX with external predictors
+    \item \textbf{Distributional Assumptions}: Residuals are non-normal, which may affect prediction intervals
+    \item \textbf{Parameter Stability}: Model parameters are assumed constant over time, which may not hold in changing market regimes
+\end{enumerate}
+
+\section{Conclusions in Context}
+
+\subsection{Practical Implications}
+
+\subsubsection{Return Forecasts}
+
+The ARIMA(2,0,2) model forecasts a bullish short-term outlook:
+\begin{itemize}
+    \item \textbf{Positive Bias}: 81\% of forecast days are positive, suggesting upward momentum
+    \item \textbf{Cumulative Return}: +1.12\% over 21 days translates to approximately 13.4\% annualized return
+    \item \textbf{Investment Strategy}: Investors might consider maintaining or increasing equity exposure, but with appropriate risk management
+    \item \textbf{Caution}: Forecasts are probabilistic; actual returns may differ significantly, especially given the wide prediction intervals
+\end{itemize}
+
+\subsubsection{Volatility Forecasts}
+
+The GARCH(1,1) model indicates increasing market risk:
+\begin{itemize}
+    \item \textbf{Rising Volatility}: Forecast suggests 10.4\% increase from historical mean
+    \item \textbf{Risk Management}: Portfolio managers should consider:
+    \begin{itemize}
+        \item Reducing position sizes to account for higher volatility
+        \item Increasing hedging activities
+        \item Adjusting VaR calculations upward
+    \end{itemize}
+    \item \textbf{Option Pricing}: Higher volatility forecasts imply higher option premiums
+    \item \textbf{Market Stress Indicator}: Rising volatility may signal increasing market uncertainty
+\end{itemize}
+
+\subsection{Risk Management Applications}
+
+\begin{itemize}
+    \item \textbf{Value-at-Risk (VaR)}: Volatility forecasts can be used to calculate daily VaR at various confidence levels
+    \item \textbf{Position Sizing}: Higher volatility forecasts suggest smaller position sizes to maintain constant risk levels
+    \item \textbf{Portfolio Rebalancing}: Forecasts can inform rebalancing frequency and thresholds
+    \item \textbf{Stress Testing}: Volatility forecasts help identify potential stress scenarios
+\end{itemize}
+
+\subsection{Model Limitations and Future Improvements}
+
+While the models provide useful forecasts, several improvements could enhance performance:
+
+\begin{enumerate}
+    \item \textbf{ARIMAX Models}: Include exogenous variables (VIX, yields, economic indicators) to capture external drivers
+    \item \textbf{GARCH Extensions}: Consider GJR-GARCH (leverage effects) or EGARCH (asymmetric volatility) models
+    \item \textbf{Regime-Switching Models}: Account for structural breaks and changing market regimes
+    \item \textbf{Combined Models}: ARIMA-GARCH models that jointly forecast mean and variance
+    \item \textbf{Ensemble Methods}: Combine multiple models to improve forecast accuracy
+    \item \textbf{Machine Learning}: Compare with LSTM, XGBoost, or other ML methods
+    \item \textbf{Real-Time Updates}: Automate daily forecast generation and model re-estimation
+\end{enumerate}
+
+\subsection{Non-Technical Summary}
+
+For managers and decision-makers without statistical background:
+
+\begin{itemize}
+    \item \textbf{What We Did}: Developed statistical models to predict SP500 daily returns and volatility using historical data
+    \item \textbf{Key Finding}: Short-term return forecasts suggest modest positive returns (+1.12\% over 21 days), but with significant uncertainty
+    \item \textbf{Risk Outlook}: Volatility is expected to increase by approximately 10\%, indicating higher market risk ahead
+    \item \textbf{Recommendation}: Maintain equity exposure but reduce position sizes and increase hedging to account for higher expected volatility
+    \item \textbf{Caveat}: Forecasts are probabilistic, not deterministic; actual outcomes may differ, especially during unexpected market events
+\end{itemize}
+
+\section*{References}
+
+\begin{thebibliography}{9}
+
+\bibitem{box1976time}
+Box, G. E. P., \& Jenkins, G. M. (1976). \textit{Time Series Analysis: Forecasting and Control}. Holden-Day.
+
+\bibitem{bollerslev1986generalized}
+Bollerslev, T. (1986). Generalized autoregressive conditional heteroskedasticity. \textit{Journal of Econometrics}, 31(3), 307-327.
+
+\bibitem{engle1982autoregressive}
+Engle, R. F. (1982). Autoregressive conditional heteroscedasticity with estimates of the variance of United Kingdom inflation. \textit{Econometrica}, 50(4), 987-1007.
+
+\bibitem{hyndman2021forecasting}
+Hyndman, R. J., \& Athanasopoulos, G. (2021). \textit{Forecasting: Principles and Practice} (3rd ed.). OTexts.
+
+\bibitem{diebold1995comparing}
+Diebold, F. X., \& Mariano, R. S. (1995). Comparing predictive accuracy. \textit{Journal of Business \& Economic Statistics}, 13(3), 253-263.
+
+\end{thebibliography}
+
+\newpage
+\appendix
+\section{Additional Diagnostic Plots}
+
+Figure \ref{fig:forecast_comparison} shows forecast vs actual comparisons for all models. Figure \ref{fig:residual_diagnostics} provides detailed residual diagnostics. Figure \ref{fig:volatility_forecast} displays the volatility forecast from GARCH(1,1).
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth]{outputs/forecast_comparison.png}
+\caption{Forecast vs Actual Comparison for AR, MA, and ARIMA Models}
+\label{fig:forecast_comparison}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth]{outputs/residual_diagnostics.png}
+\caption{Residual Diagnostics for All Models}
+\label{fig:residual_diagnostics}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth]{outputs/volatility_forecast.png}
+\caption{GARCH(1,1) Volatility Forecast vs ARCH(1) Forecast}
+\label{fig:volatility_forecast}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth]{outputs/sp500_forecast.png}
+\caption{SP500 Return Forecasts with Prediction Intervals (ARIMA(2,0,2))}
+\label{fig:sp500_forecast}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth]{outputs/metrics_summary.png}
+\caption{Model Performance Metrics Summary}
+\label{fig:metrics_summary}
+\end{figure}
+
+\end{document}
+
