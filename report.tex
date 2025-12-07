@@ -274,7 +274,44 @@ Model selection was performed in two stages to ensure both statistical rigor and
 
 \subsubsection{Return Forecasting Models}
 
-Table \ref{tab:return_models} summarizes the out-of-sample performance of AR, MA, and ARIMA models from the rolling-origin backtest.
+The AIC and BIC values of the ARIMA(2,0,2) model (–16,287.1 and -16,251.85, respectively) indicate that it provides a strong in-sample fit relative to alternative models considered during the order-selection stage. The ARIMA(2,0,2) model effectively combines the benefits from AR and MA components, enabling it to capture more complex return dynamics better than pure AR or MA models. 
+
+
+\subsubsection{Volatility Forecasting Models}
+
+For volatility models (GARCH and ARCH), selection was based on information criteria (AIC/BIC) as these models are evaluated on their ability to capture volatility dynamics rather than point forecasts. Table \ref{tab:volatility_models} compares the performance of GARCH and ARCH models. GARCH(1,1) outperforms ARCH(1) model, achieving substantially lower AIC (−6.65) and BIC (−6.64) values. This indicates a superior in-sample fit. In addition, GARCH(1,1) produces time-varying volatility forecasts ranging from 0.855$\%$ to 0.991$\%$, which is significantly more realistic than the constant volatility implied by the ARCH(1) model. The ability to model dynamic changes and capture volatility persistence is especially important for financial data. Considering the statistical fit and the alignment with the characteristics of financial time series, GARCH(1,1) is selected.
+
+\begin{table}[H]
+\centering
+\caption{Volatility Model Comparison}
+\label{tab:volatility_models}
+\begin{tabular}{lcccc}
+\toprule
+Model & Order & AIC & BIC & Mean Forecast Volatility (\%) \\
+\midrule
+\textbf{GARCH} & \textbf{(1,1)} & \textbf{-6.65} & \textbf{-6.64} & \textbf{0.931} \\
+ARCH & (1) & -6.14 & -6.14 & 1.152 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Model Diagnostics}
+
+\subsubsection{ARIMA(2,0,2) Diagnostics}
+
+Diagnostic checks were performed to assess the adequacy of the ARIMA(2,0,2) model. The Ljung–Box test detects some residual autocorrelation with $p<0.05$, but the magnitude is small and is generally acceptable for financial data, showing a weak dependence. In consistency with the Ljung–Box test result, the residual ACF/PACF plots show that most autocorrelations are within 95$\%$ confidence interval, indicating that no major short-term serial dependence remains after fitting the model. 
+
+The distributional diagnostics were also performed. The Jarque–Bera test rejects normality with a p-value less than 0.05, and the QQ-plot exhibits heavy tails relative to the normal distribution. Both of them are standard features of financial return residuals.
+
+Overall, the ARIMA(2,0,2) model successfully removes the significant autocorrelation patterns and provides an adequate model.
+
+\subsubsection{GARCH(1,1) Diagnostics}
+
+Diagnostic checks were conducted to assess the adequacy of GARCH(1,1). The Ljung–Box test was applied to the raw residuals, and the result shows they are approximately white noise. More importantly, the Ljung–Box test on the squared residuals reveals no remaining ARCH effects, meaning that after fitting the GARCH model, the squared residuals no longer exhibit significant autocorrelation. These results confirm that the GARCH(1,1) successfully captures the volatility clustering characteristic of financial returns.
+
+\subsection{Out-of-Sample Performance}
+
+Table \ref{tab:return_models} summarizes the out-of-sample performance of AR, MA, and ARIMA models. Out-of-sample evaluation was conducted using a rolling-origin backtest with 528 one-step-ahead forecasts, providing a realistic performance estimate. Among ARIMA(2,0,2), AR(8), and MA(2), ARIMA(2,0,2) achieves the lowest RMSE (0.0100), indicating the best overall forecasting accuracy across the test period. Although its MAE (0.00655) is slightly higher than that of the MA(8) model (0.00653) and the MA(2) model (0.00640), the differences across models are subtle, reflecting the well-known difficulty of predicting equity returns. Directional accuracy values are in the range of 49.6$\%$ and 53.4$\%$, consistent with the weak predictability of daily stock returns. 
 
 \begin{table}[H]
 \centering
@@ -291,79 +328,16 @@ MA(2) & 0.0101 & 0.00640 & 2838 & \textbf{53.4} \\
 \end{tabular}
 \end{table}
 
-\textbf{Selected Model: ARIMA(2,0,2)}
-\begin{itemize}
-    \item \textbf{Selection Criterion}: Lowest out-of-sample RMSE (0.0100), indicating best overall forecast accuracy
-    \item \textbf{Order Selection}: The order (2,0,2) was selected using in-sample BIC during backtesting, with average selected order across folds being approximately (2,0,2)
-    \item \textbf{In-Sample Fit}: AIC: -16,287.1, BIC: -16,251.85 (from initial training fit, for diagnostic purposes)
-    \item \textbf{Model Characteristics}: Combines benefits of both AR and MA components, better capturing complex return dynamics than pure AR or MA models
-\end{itemize}
-
-\subsubsection{Volatility Forecasting Models}
-
-For volatility models (GARCH and ARCH), selection was based on information criteria (AIC/BIC) as these models are evaluated on their ability to capture volatility dynamics rather than point forecasts. Table \ref{tab:volatility_models} compares GARCH and ARCH models.
-
-\begin{table}[H]
-\centering
-\caption{Volatility Model Comparison}
-\label{tab:volatility_models}
-\begin{tabular}{lcccc}
-\toprule
-Model & Order & AIC & BIC & Mean Forecast Volatility (\%) \\
-\midrule
-\textbf{GARCH} & \textbf{(1,1)} & \textbf{-6.65} & \textbf{-6.64} & \textbf{0.931} \\
-ARCH & (1) & -6.14 & -6.14 & 1.152 \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\textbf{Selected Model: GARCH(1,1)}
-\begin{itemize}
-    \item \textbf{Selection Criterion}: Lower BIC (-6.64 vs -6.14), indicating better model fit
-    \item Lower AIC (-6.65 vs -6.14) confirms the selection
-    \item Produces time-varying volatility forecasts (0.855\% to 0.991\%), more realistic than ARCH's constant forecast
-    \item GARCH(1,1) is the standard model in finance due to its ability to capture volatility persistence
-\end{itemize}
-
-\subsection{Model Diagnostics}
-
-\subsubsection{ARIMA(2,0,2) Diagnostics}
-
-\begin{itemize}
-    \item \textbf{Ljung-Box Test}: Some residual autocorrelation detected (p < 0.05), but within acceptable range for financial data
-    \item \textbf{Jarque-Bera Test}: Residuals are non-normal (p < 0.05), which is common in financial returns due to fat tails
-    \item \textbf{Residual ACF/PACF}: Most autocorrelations within 95\% confidence bands
-    \item \textbf{Q-Q Plot}: Shows deviations from normality in the tails, consistent with financial return distributions
-\end{itemize}
-
-\subsubsection{GARCH(1,1) Diagnostics}
-
-\begin{itemize}
-    \item \textbf{Ljung-Box Test (Residuals)}: Residuals are approximately white noise
-    \item \textbf{Ljung-Box Test (Squared Residuals)}: No remaining ARCH effects (squared residuals are white noise)
-    \item \textbf{Volatility Clustering}: Successfully captured, as evidenced by the time-varying conditional variance
-\end{itemize}
-
-\subsection{Out-of-Sample Performance}
-
-The rolling-origin backtest with 528 test folds provides realistic performance estimates. These results were used to select the best model type (ARIMA) as described in Section 4.1. The detailed performance metrics are:
-
-\begin{itemize}
-    \item \textbf{ARIMA(2,0,2)}: RMSE = 0.0100, MAE = 0.00655, Directional Accuracy = 49.6\%
-    \item \textbf{AR(8)}: RMSE = 0.0101, MAE = 0.00653, Directional Accuracy = 51.1\%
-    \item \textbf{MA(2)}: RMSE = 0.0101, MAE = 0.00640, Directional Accuracy = 53.4\%
-\end{itemize}
-
 \subsubsection{Diebold-Mariano Tests}
 
-Pairwise comparisons using the Diebold-Mariano test:
+To further and formally assess whether ARIMA(2,0,2), AR(8), and MA(2) differ in predictive power, we conducted pairwise comparisons using the Diebold-Mariano test. The results are as follows:
 \begin{itemize}
     \item AR vs MA: Not significantly different (p = 0.75)
     \item AR vs ARIMA: Not significantly different (p = 0.44)
     \item MA vs ARIMA: Not significantly different (p = 0.51)
 \end{itemize}
 
-While ARIMA has the lowest RMSE, the differences are not statistically significant at conventional levels. This suggests that all three models have similar predictive power, with ARIMA having a slight edge.
+The test results further confirm there is no significant difference in forecasting power between these models, despite the lowest RMSE value of ARIMA(2,0,2).
 
 \subsection{Forecasts}
 
@@ -402,33 +376,15 @@ The forecast indicates increasing market risk ahead, with volatility gradually r
 
 \subsubsection{Return Forecasting}
 
-Model selection was performed using a two-stage approach: (1) order selection using in-sample BIC during backtesting, and (2) model type selection using out-of-sample RMSE. Among AR, MA, and ARIMA models:
-\begin{itemize}
-    \item \textbf{ARIMA(2,0,2)} is selected based on lowest out-of-sample RMSE (0.0100)
-    \item All models show similar performance (RMSE $\approx$ 0.010), suggesting limited predictability in daily returns
-    \item MA model has best directional accuracy (53.4\%), but difference is small
-    \item Diebold-Mariano tests indicate no statistically significant differences between models
-    \item The use of out-of-sample RMSE for model type selection is justified because it directly measures forecast accuracy and avoids overfitting, which is appropriate for forecasting applications
-\end{itemize}
+Return forecasting model selection followed a two-stage procedure: the ARIMA order was first chosen using in-sample BIC, and the final model type among AR, MA, and ARIMA was selected based on out-of-sample forecasting performance. The out-of-sample RMSE values of all models are nearly identical (RMSE ≈ 0.010), suggesting limited predictability in daily return. ARIMA(2,0,2) achieves the lowest RMSE (0.0100), giving it a slight empirical advantage. The MA(2) model achieves the highest directional accuracy (53.4%), but the difference is small. The Diebold-Mariano tests further indicate no statistically significant differences between models. ARIMA(2,0,2) is selected as it provides the most balanced combination of goodness-of-fit, diagnostic adequacy, and forecasting accuracy. The out-of-sample RMSE offers an appropriate criterion for forecasting applications because it directly measures forecast accuracy and avoids overfitting. 
 
 \subsubsection{Volatility Forecasting}
 
-Between GARCH and ARCH models:
-\begin{itemize}
-    \item \textbf{GARCH(1,1)} is clearly superior (BIC: -6.64 vs -6.14)
-    \item GARCH produces realistic time-varying volatility forecasts
-    \item ARCH(1) produces constant volatility (1.152\%), which is unrealistic for financial markets
-    \item GARCH's ability to model volatility persistence makes it the standard choice in finance
-\end{itemize}
+Between GARCH and ARCH models, GARCH(1,1) is clearly the preferred model for volatility forecasting. It achieves a lower BIC value of -6.64, compared to -6.14 for ARCH(1). More importantly, GARCH(1,1) produces realistic time-varying volatility forecasts. In contrast, ARCH(1) produces constant volatility (1.152$\%$), which is unrealistic for financial markets. The ability of GARCH(1,1) to model volatility persistence makes it the standard choice in finance.
 
 \subsection{Forecast Accuracy Assessment}
 
-\begin{itemize}
-    \item \textbf{Return Forecasts}: RMSE of 0.0100 corresponds to approximately 1\% daily forecast error, which is reasonable given the inherent unpredictability of financial markets
-    \item \textbf{Directional Accuracy}: 49.6\% for ARIMA is close to random (50\%), indicating limited directional predictability
-    \item \textbf{Volatility Forecasts}: GARCH(1,1) successfully captures volatility clustering and provides time-varying forecasts
-    \item \textbf{Prediction Intervals}: 95\% intervals are appropriately wide (4.36\% average width), reflecting forecast uncertainty
-\end{itemize}
+The return forecasts exhibit an RMSE of approximately 0.0100, corresponding to approximately 1$\%$ daily forecast error, which is reasonable given the inherent unpredictability of financial markets. Directional accuracy of ARIMA(2,0,2) achieves 49.6$\%$, indistinguishable from random guessing (50$\%$), indicating limited directional predictability. For volatility forecasting, the GARCH(1,1) successfully captures volatility clustering and provides time-varying forecasts. Finally, the 95$\%$ prediction intervals have an average width of 4.36$\%$, which is appropriately wide and reflects the substantial forecast uncertainty.
 
 \subsection{Limitations and Assumptions}
 
