@@ -6,7 +6,7 @@
 \usepackage{booktabs}
 \usepackage{geometry}
 \geometry{margin=1in}
-\usepackage{natbib}
+\usepackage[numbers]{natbib}
 \usepackage{hyperref}
 \usepackage{float}
 \usepackage{caption}
@@ -274,12 +274,12 @@ Model selection was performed in two stages to ensure both statistical rigor and
 
 \subsubsection{Return Forecasting Models}
 
-The AIC and BIC values of the ARIMA(2,0,2) model (–16,287.1 and -16,251.85, respectively) indicate that it provides a strong in-sample fit relative to alternative models considered during the order-selection stage. The ARIMA(2,0,2) model effectively combines the benefits from AR and MA components, enabling it to capture more complex return dynamics better than pure AR or MA models. 
+The AIC and BIC values of the ARIMA(2,0,2) model (-16,287.1 and -16,251.85, respectively) indicate that it provides a strong in-sample fit relative to alternative models considered during the order-selection stage. The ARIMA(2,0,2) model effectively combines the benefits from AR and MA components, enabling it to capture more complex return dynamics better than pure AR or MA models. 
 
 
 \subsubsection{Volatility Forecasting Models}
 
-For volatility models (GARCH and ARCH), selection was based on information criteria (AIC/BIC) as these models are evaluated on their ability to capture volatility dynamics rather than point forecasts. Table \ref{tab:volatility_models} compares the performance of GARCH and ARCH models. GARCH(1,1) outperforms ARCH(1) model, achieving substantially lower AIC (−6.65) and BIC (−6.64) values. This indicates a superior in-sample fit. In addition, GARCH(1,1) produces time-varying volatility forecasts ranging from 0.855$\%$ to 0.991$\%$, which is significantly more realistic than the constant volatility implied by the ARCH(1) model. The ability to model dynamic changes and capture volatility persistence is especially important for financial data. Considering the statistical fit and the alignment with the characteristics of financial time series, GARCH(1,1) is selected.
+For volatility models (GARCH and ARCH), selection was based on information criteria (AIC/BIC) as these models are evaluated on their ability to capture volatility dynamics rather than point forecasts. Table \ref{tab:volatility_models} compares the performance of GARCH and ARCH models. GARCH(1,1) outperforms ARCH(1) model, achieving substantially lower AIC (-6.65) and BIC (-6.64) values. This indicates a superior in-sample fit. In addition, GARCH(1,1) produces time-varying volatility forecasts ranging from 0.855$\%$ to 0.991$\%$, which is significantly more realistic than the constant volatility implied by the ARCH(1) model. The ability to model dynamic changes and capture volatility persistence is especially important for financial data. Considering the statistical fit and the alignment with the characteristics of financial time series, GARCH(1,1) is selected.
 
 \begin{table}[H]
 \centering
@@ -376,7 +376,7 @@ The forecast indicates increasing market risk ahead, with volatility gradually r
 
 \subsubsection{Return Forecasting}
 
-Return forecasting model selection followed a two-stage procedure: the ARIMA order was first chosen using in-sample BIC, and the final model type among AR, MA, and ARIMA was selected based on out-of-sample forecasting performance. The out-of-sample RMSE values of all models are nearly identical (RMSE ≈ 0.010), suggesting limited predictability in daily return. ARIMA(2,0,2) achieves the lowest RMSE (0.0100), giving it a slight empirical advantage. The MA(2) model achieves the highest directional accuracy (53.4%), but the difference is small. The Diebold-Mariano tests further indicate no statistically significant differences between models. ARIMA(2,0,2) is selected as it provides the most balanced combination of goodness-of-fit, diagnostic adequacy, and forecasting accuracy. The out-of-sample RMSE offers an appropriate criterion for forecasting applications because it directly measures forecast accuracy and avoids overfitting. 
+Return forecasting model selection followed a two-stage procedure: the ARIMA order was first chosen using in-sample BIC, and the final model type among AR, MA, and ARIMA was selected based on out-of-sample forecasting performance. The out-of-sample RMSE values of all models are nearly identical (RMSE $\approx$ 0.010), suggesting limited predictability in daily return. ARIMA(2,0,2) achieves the lowest RMSE (0.0100), giving it a slight empirical advantage. The MA(2) model achieves the highest directional accuracy (53.4%), but the difference is small. The Diebold-Mariano tests further indicate no statistically significant differences between models. ARIMA(2,0,2) is selected as it provides the most balanced combination of goodness-of-fit, diagnostic adequacy, and forecasting accuracy. The out-of-sample RMSE offers an appropriate criterion for forecasting applications because it directly measures forecast accuracy and avoids overfitting. 
 
 \subsubsection{Volatility Forecasting}
 
